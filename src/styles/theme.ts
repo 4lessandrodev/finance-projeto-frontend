@@ -1,71 +1,114 @@
-import { ThemeType } from '@types';
+import { ITheme } from '@types';
 
 export default {
     font: {
         family: {
-            default: "'Fira Sans Condensed', sans-serif",
-            secondary: 'Roboto',
-            third: "'Roboto', sans-serif",
+            default: "'Roboto'",
+            secondary: "sans-serif",
         },
         weights: {
-            extraLight: '200',
+            thin: '100',
             light: '300',
             regular: '400',
             medium: '500',
-            semiBold: '600',
             bold: '700',
-            extraBold: '800',
+            black: '900',
         },
         sizes: {
-            xsmall: '0.5rem',
-            small: '0.7rem',
-            xnormal: '0.9rem',
-            normal: '1rem',
-            title: '1.6rem',
-            large: '2rem',
-            xlarge: '4rem',
-            xxlarge: '6rem',
+            /** 2px */
+            small1: '0.12rem',
+            /** 4px */
+            small2: '0.25rem',
+            /** 6px */
+            small3: '0.37rem',
+            /** 8px */
+            small4: '0.5rem',
+            /** 10px */
+            small5: '0.62rem',
+            /** 12px */
+            regular1: '0.75rem',
+            /** 14px */
+            regular2: '0.87rem',
+            /** 16px */
+            regular3: '1rem',
+            /** 18px */
+            regular4: '1.12rem',
+            /** 20px */
+            regular5: '1.25rem',
+            /** 22px */
+            medium1: '1.37rem',
+            /** 24px */
+            medium2: '1.5rem',
+            /** 26px */
+            medium3: '1.62rem',
+            /** 28px */
+            medium4: '1.75rem',
+            /** 30px */
+            medium5: '1.87rem',
+            /** 32px */
+            large1: '2rem',
+            /** 34px */
+            large2:  '2.2rem',
+            /** 36px */
+            large3: '2.25rem',
+            /** 38px */
+            large4: '2.37rem',
+            /** 40px */
+            large5:  '2.5rem',
         },
     },
     colors: {
-        primary: '#C3D1EE',
-        secondary: '#252930',
-        green: '#159950',
-        darkGreen: '#0E612D',
-        lightOrange: '#FF8B61',
-        orange: '#D76237',
-        darkOrange: '#AA4D2B',
-        lightGray: '#F5F3F3',
-        gray: '#CCCCCC',
-        darkGray: '#B4B7C0',
-        lightBlue251: '#EBF5FE',
-        lightBlue250: '#ECF3FD',
-        lightBlue242: '#D2E0FD',
-        lightBlue241: '#CFD9F2',
-        lightBlue240: '#C3D1EE',
-        lightBlue239: '#B6C1D8',
-        white: '#FFFFFF',
-        black81: '#252930',
-        black87: '#161B20',
-        black89: '#0C171B',
+      orange: '#ff7a00',
+      red: '#ca0d0d',
+      green: '#075318',
+      black: '#000000',
+      gray1: '#8b8b8b',
+      gray2: '#a39c9c',
+      gray3: '#a4a4a4',
+      gray4: '#d2d2d2',
+      gray5: '#f1eeee',
+      white: '#ffffff',
     },
-    borderRadius: {
-        xsmall: '2px',
-        small: '3px',
-        xmedium: '5px',
-        medium: '7px',
-        xlarge: '34px',
-        large: '35px',
+    sizes: {
+        /** 2.4px */
+        small1: '0.15rem',
+        /** 4.8px */
+        small2: '0.30rem',
+        /** 7.2px */
+        small3: '0.45rem',
+        /** 12px */
+        small4: '0.75rem',
+        /** 16px */
+        small5: '1rem',
+        /** 18.4px */
+        regular1: '1.15rem',
+        /** 20.8px */
+        regular2: '1.30rem',
+        /** 23.2px */
+        regular3: '1.45rem',
+        /** 28px */
+        regular4: '1.75rem',
+        /** 32px */
+        regular5: '2rem',
+        /** 34.4px */
+        medium1: '2.15rem',
+        /** 36.8px */
+        medium2: '2.30rem',
+        /** 39.2px */
+        medium3: '2.45rem',
+        /** 44px */
+        medium4: '2.75rem',
+        /** 48px */
+        medium5: '3rem',
+        /** 50.4px */
+        large1: '3.15rem',
+        /** 52.8px */
+        large2:  '3.30rem',
+        /** 55.2px */
+        large3: '3.45rem',
+        /** 60px */
+        large4: '3.75rem',
+        /** 64px */
+        large5:  '4rem',
     },
-    spacings: {
-        xsmall: '0.2rem',
-        xxsmall: '0.4rem',
-        small: '0.7rem',
-        xmedium: '1rem',
-        xxmedium: '1.2rem',
-        medium: '1.5rem',
-        xlarge: '2rem',
-        xxlarge: '2.rem',
-        large: '3rem',
-    },
-} as Partial<ThemeType>;
+} as Partial<ITheme>;

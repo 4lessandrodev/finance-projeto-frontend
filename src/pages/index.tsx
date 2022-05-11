@@ -1,10 +1,10 @@
+import Title from '@components/Title'
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   return (
-    <h1>Hello there</h1>
+    <Title />
   )
 }
 
-export default Home
+export default Home;
