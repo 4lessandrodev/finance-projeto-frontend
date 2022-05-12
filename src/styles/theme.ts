@@ -111,4 +111,18 @@ export default {
         /** 64px */
         large5:  '4rem',
     },
+    logoSizes: {
+        /** 40px */
+        small: '40px',
+        /** 60px */
+        xsmall: '60px',
+        /** 80px */
+        medium: '80px',
+        /** 100px */
+        regular: '100px',
+        /** 150px */
+        large: '150px',
+        /** 200px */
+        xlarge: '200px'
+    }
 } as Partial<ITheme>;

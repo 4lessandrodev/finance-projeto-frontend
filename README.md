@@ -2,6 +2,7 @@
 
 Projeto controle financeiro frontend que implementa a api graphql do [link](https://github.com/4lessandrodev/finance-project-ddd)
 
+<img src="./public/images/demo.gif" alt="imagem" width="100%">
 <img src="./public/images/colors.png" width="100%" alt="image">
 <img src="./public/images/buttons.png" width="100%" alt="image">
 <img src="./public/images/graph.png" width="100%" alt="image">
