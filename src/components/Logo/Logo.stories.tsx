@@ -18,10 +18,10 @@ export default {
 const Template: ComponentStory<typeof Logo> = (args: any) => <div style={{
 	backgroundColor: args?.backgroundColor ?? 'darkgray',
 	display: 'flex',
-	height: '25vh',
 	width: '10vw',
 	justifyContent: 'center',
 	alignItems: 'center',
+	padding: '2rem'
 }}><Logo {...args} /></div>;
 
 export const Default = Template.bind({});
