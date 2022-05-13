@@ -1,12 +1,23 @@
-import Logo from "@components/Logo";
 import { ReactElement } from "react";
-import H1 from './style';
+import H1, { StyleProps } from './style';
 
-export default function Title(): ReactElement  {
+export interface TitleProps extends Partial<StyleProps> {
+	value: string;
+}
+
+export default function Title({
+	value,
+	color = 'black',
+	size = 'regular1',
+	weight = 'regular',
+	textTransform = 'capitalize'
+}: TitleProps): ReactElement  {
 	return (
-		<div>
-			<H1>Hello There!!!</H1>
-			<Logo />
-		</div>
+			<H1
+				size={size}
+				color={color}
+				weight={weight}
+				textTransform={textTransform}
+			>{value}</H1>
 	)
 }

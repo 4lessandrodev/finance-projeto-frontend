@@ -1,46 +1,55 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import Logo from './index';
+import Title from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Logo',
-  component: Logo,
+  title: 'Title',
+  component: Title,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 	argTypes: {
 		backgroundColor: {
 		  control: { type: 'color' }
 	  }
   },
-} as ComponentMeta<typeof Logo>;
+} as ComponentMeta<typeof Title>;
 
-const Template: ComponentStory<typeof Logo> = (args: any) => <div style={{
+const Template: ComponentStory<typeof Title> = (args: any) => <div style={{
 	backgroundColor: args?.backgroundColor ?? 'darkgray',
 	display: 'flex',
 	height: '25vh',
-	width: '10vw',
+	width: '30vw',
 	justifyContent: 'center',
 	alignItems: 'center',
-}}><Logo {...args} /></div>;
+}}><Title {...args} /></div>;
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
-	color: 'default',
-	size: 'regular',
+	color: 'black',
+	size: 'medium1',
+	value: 'Title Example',
+	weight: 'regular',
+	textTransform: 'capitalize'
 };
 
 export const Dark = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Dark.args = {
-	color: 'dark',
-	size: 'regular'
+	color: 'black',
+	size: 'regular3',
+	value: 'Title Example',
+	weight: 'black',
+	textTransform: 'capitalize'
 };
 
 export const Light = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Light.args = {
-	color: 'light',
-	size: 'regular'
+	color: 'white',
+	size: 'large5',
+	value: 'Title Example',
+	weight: 'thin',
+	textTransform: 'capitalize'
 };
