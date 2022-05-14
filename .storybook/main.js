@@ -1,5 +1,5 @@
 const path = require("path");
-const pathToInlineSvg = path.resolve(__dirname, '../src/components/Logo');
+const pathToInlineSvg = path.resolve(__dirname, '../src/assets');
 
 // Export a function. Accept the base config as the only param.
 module.exports = {
