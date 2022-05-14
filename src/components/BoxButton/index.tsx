@@ -1,13 +1,25 @@
+import Icon1 from "../../assets/dollar-sign-solid.svg";
+import Icon2 from "../../assets/money-bill-1-regular.svg";
+import Icon3 from "../../assets/sack-dollar-solid.svg";
 import Title from "../Title";
 import { IColors } from "@types";
-import { Container, CrossVerticalIcon, CrossHorizontalIcon, Group, UpSide, Wrapper, WrapperProps } from "./style";
-import CircleChevronRight from "../../assets/right-solid.svg";
+import {
+	Container,
+	CrossVerticalIcon,
+	CrossHorizontalIcon,
+	Group,
+	DownSide,
+	Wrapper,
+	WrapperProps,
+	UpSide
+} from "./style";
 
 export interface BoxButtonProps extends Partial<WrapperProps> {
 	label?: string;
 	value?: number;
 	percentage?: number;
 	color?: keyof IColors;
+	icon?: 'dollar' | 'money' | 'sack';
 	onClick?: () => void;
 }
 
@@ -17,40 +29,43 @@ export default function BoxButton({
 	backgroundColor = 'white',
 	color = 'black',
 	percentage = -1,
-	borderStyle
+	icon = 'sack',
+	borderStyle,
+	onClick
 }: BoxButtonProps) {
 
-	const handleInfo = (percentage: number, color: keyof IColors) => {
-		return (
-			<Group>
-				<Title value={`${percentage}%`} weight="thin" as="h3" size="regular1" color={color} />
-				<Container color={color}>
-					<CircleChevronRight />
-				</Container>
-			</Group>
-		)
-	}
-
 	const isHandleInfo = !!label || percentage >= 0 || !!value;
+	const Icon = icon === 'dollar' ? Icon1 : icon === 'money' ? Icon2 : Icon3;
 
-	console.log(!!isHandleInfo);
-	
 	return (
 		<Wrapper
 			backgroundColor={backgroundColor}
 			color={color}
 			borderStyle={borderStyle}
 			isHandleInfo={!!isHandleInfo}
+			onClick={onClick}
 		>
-			{ isHandleInfo ? (
+			{isHandleInfo ? (
 				<>
 					<UpSide>
-						{label && (
-							<Title value={label} weight="black" as="h3" size="regular3" color={color} />
-						)}
-						{percentage >= 0 ? handleInfo(percentage, color) : false}
+						{
+							label && (
+								<Group>
+									<Title value={label} weight="black" as="h3" size="regular3" color={color} />
+									<Container color={color}>
+										<Icon />
+									</Container>
+								</Group>
+							)
+						}
 					</UpSide>
-					{value && (<Title value={`R$ ${value}`} weight="thin" as="h3" size="regular1" color={color} />)}
+					<DownSide>
+						{value && (<Title value={`R$ ${value}`} weight="thin" as="h3" size="regular2" color={color} />)}
+						{
+							percentage >= 0 ? (
+								<Title value={`${percentage}%`} weight="thin" as="h3" size="regular2" color={color} />) : false
+						}
+					</DownSide>
 				</>
 			) : (
 				<>

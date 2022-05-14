@@ -29,7 +29,8 @@ export const Box = Template.bind({});
 Box.args = {
 	percentage: 0,
 	value: 2000,
-	label: 'Lazer'
+	label: 'Lazer',
+	onClick: () => alert('clicked on container')
 };
 
 export const Dotted = Template.bind({});
@@ -39,7 +40,8 @@ Dotted.args = {
 	value: undefined,
 	label: undefined,
 	borderStyle: 'dashed',
-	color: 'gray3'
+	color: 'gray3',
+	onClick: () => alert('clicked new budget box')
 };
 
 export const Ballance = Template.bind({});
@@ -49,5 +51,6 @@ Ballance.args = {
 	value: 2000,
 	label: 'Total',
 	backgroundColor: 'green',
-	color: 'white'
+	color: 'white',
+	onClick: () => alert('clicked on total')
 };

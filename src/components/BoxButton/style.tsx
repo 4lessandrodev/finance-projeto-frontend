@@ -28,8 +28,8 @@ export const Wrapper = styled.div<WrapperProps>`
 	width: 260px;
 	border: ${({ theme, borderStyle, color })=> GetBorderStyle(theme, borderStyle, color )};
 	border-radius: 15px;
-	padding: 1rem 1.5rem;
-	transition: all 0.3s ease-in-out;
+	padding: 1rem 1.7rem;
+	transition: all 0.2s ease-in-out;
 	${({ isHandleInfo }) => `${!isHandleInfo ? `
 		justify-content: center;
 		align-items: center;
@@ -41,9 +41,20 @@ export const Wrapper = styled.div<WrapperProps>`
 	}
 `;
 
-export const UpSide = styled.div`
+export const DownSide = styled.div`
 	display: inline-flex;
 	justify-content: space-between;
+	align-items: center;
+	height: 40%;
+	>* {
+		margin: 0;
+		padding: 0;
+		padding-bottom: 0.5rem;
+	}
+`
+
+export const UpSide = styled.div`
+	display: inline-flex;
 	align-items: flex-end;
 	height: 50%;
 	>* {
@@ -58,7 +69,7 @@ export const Group = styled.div`
 	justify-content: space-between;
 	align-items: flex-end;
 	height: 100%;
-	width: 40%;
+	width: 100%;
 	>* {
 		margin: 0;
 		padding: 0;
@@ -72,9 +83,8 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
 	display: flex;
 	width: 1.1rem;
-	height: 1.1rem;
+	height: 1.5rem;
 	margin-bottom: 0.1rem;
-	transform: rotate(-90deg);
 	>:first-child path {
 		fill:  ${({ theme, color }: IThemeProvider & ContainerProps ) => `${theme.colors[color]}`};
 	}
