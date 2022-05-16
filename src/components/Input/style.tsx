@@ -38,6 +38,7 @@ export const ContainerIcon = styled.div`
 	position: relative;
 	width: 1rem;
 	left: -1rem;
+	cursor: pointer;
 `;
 
 export interface LabelProps {
