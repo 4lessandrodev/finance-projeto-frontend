@@ -47,6 +47,6 @@ WithText.args = {
 	isChecked: false,
 	name: 'check',
 	color: 'black',
-	size: 'regular2',
+	size: 'regular3',
 	weight: 'regular'
 };

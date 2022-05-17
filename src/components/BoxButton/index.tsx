@@ -18,8 +18,8 @@ export interface BoxButtonProps extends Partial<WrapperProps> {
 	label?: string;
 	value?: number;
 	percentage?: number;
-	color?: keyof IColors;
 	icon?: 'dollar' | 'money' | 'sack';
+	valueColor?: keyof IColors;
 	onClick?: () => void;
 }
 
@@ -30,12 +30,14 @@ export default function BoxButton({
 	color = 'black',
 	percentage = -1,
 	icon = 'sack',
+	valueColor = 'black',
 	borderStyle,
 	onClick
 }: BoxButtonProps) {
 
 	const isHandleInfo = !!label || percentage >= 0 || !!value;
 	const Icon = icon === 'dollar' ? Icon1 : icon === 'money' ? Icon2 : Icon3;
+	const shortLabel = label && label.length > 12 ? label.slice(0, 12) + '...' : label;
 
 	return (
 		<Wrapper
@@ -47,11 +49,11 @@ export default function BoxButton({
 		>
 			{isHandleInfo ? (
 				<>
-					<UpSide>
+					<UpSide title={label}>
 						{
-							label && (
+							shortLabel && (
 								<Group>
-									<Title value={label} weight="black" as="h3" size="regular3" color={color} />
+									<Title value={shortLabel} weight="black" as="h3" size="regular2" color={color} />
 									<Container color={color}>
 										<Icon />
 									</Container>
@@ -60,7 +62,9 @@ export default function BoxButton({
 						}
 					</UpSide>
 					<DownSide>
-						{value && (<Title value={`R$ ${value}`} weight="thin" as="h3" size="regular2" color={color} />)}
+						{value && (
+							<Title value={`R$ ${value}`} weight="thin" as="h3" size="regular2" color={valueColor} />
+						)}
 						{
 							percentage >= 0 ? (
 								<Title value={`${percentage}%`} weight="thin" as="h3" size="regular2" color={color} />) : false

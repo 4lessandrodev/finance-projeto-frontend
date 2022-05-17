@@ -30,6 +30,9 @@ Box.args = {
 	percentage: 0,
 	value: 2000,
 	label: 'Lazer',
+	valueColor: 'green',
+	color: 'gray2',
+	borderStyle: 'solid',
 	onClick: () => alert('clicked on container')
 };
 
@@ -51,6 +54,7 @@ Ballance.args = {
 	value: 2000,
 	label: 'Total',
 	backgroundColor: 'green',
-	color: 'white',
+	color: 'gray1',
+	valueColor: 'white',
 	onClick: () => alert('clicked on total')
 };

@@ -5,6 +5,13 @@ export interface IFontFamily {
 	secondary: string;
 }
 
+export interface ITransform {
+	capitalize: string,
+	lowercase: string,
+	uppercase: string,
+	none: string,
+}
+
 export interface IWeights {
 	/** 100 */
 	thin: string;
@@ -24,6 +31,7 @@ export interface IFont {
 	family: IFontFamily;
 	weights: IWeights;
 	sizes: ISizes;
+	textTransform: ITransform;
 }
 
 export interface ISizes {
@@ -67,6 +75,16 @@ export interface ISizes {
 	large4: string;
 	/** 64px */
 	large5: string;
+	/** 66.4px */
+	large6: string,
+	/** 68.8px */
+	large7: string,
+	/** 71.2px */
+	large8: string,
+	/** 80px */
+	large9: string,
+	/** 96px */
+	large10:  string,
 }
 
 export interface IColors {

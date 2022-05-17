@@ -13,7 +13,7 @@ export interface WrapperProps {
 const GetBorderStyle = (theme: ITheme, borderStyle?: BorderStyle, color?: keyof IColors): string => {
 	if (borderStyle && color) {
 		const colorValue = theme.colors[color];
-		const style = `${'2.7px ' + borderStyle + ' ' + colorValue}`;
+		const style = `${'2px ' + borderStyle + ' ' + colorValue}`;
 		console.log(style)
 		return style;
 	}
@@ -24,8 +24,8 @@ export const Wrapper = styled.div<WrapperProps>`
 	display: flex;
 	flex-direction: column;
 	background-color: ${({ theme, backgroundColor }: IThemeProvider & WrapperProps ) => `${theme.colors[backgroundColor]}`};
-	height: 190px;
-	width: 260px;
+	height: 170px;
+	width: 250px;
 	border: ${({ theme, borderStyle, color })=> GetBorderStyle(theme, borderStyle, color )};
 	border-radius: 15px;
 	padding: 1rem 1.7rem;
@@ -37,7 +37,8 @@ export const Wrapper = styled.div<WrapperProps>`
 	`: ''}`}
 	&:hover{
 		cursor: pointer;
-		box-shadow: 0px 3px 15px -3px rgba(0,0,0,0.62);
+		box-shadow: 0px 3px 10px -3px #00000079;
+		filter: brightness(0.98);
 	}
 `;
 

@@ -56,6 +56,16 @@ export default {
             /** 40px */
             large5:  '2.5rem',
         },
+        textTransform: {
+            /** capitalize */
+            capitalize: 'capitalize',
+            /** lowercase */
+            lowercase: 'lowercase',
+            /** uppercase */
+            uppercase: 'uppercase',
+            /** '' */
+            none: 'none'
+        }
     },
     colors: {
       orange: '#ff7a00',
@@ -109,7 +119,17 @@ export default {
         /** 60px */
         large4: '3.75rem',
         /** 64px */
-        large5:  '4rem',
+        large5: '4rem',
+        /** 66.4px */
+        large6: '4.15rem',
+        /** 68.8px */
+        large7: '4.30rem',
+        /** 71.2px */
+        large8: '4.45rem',
+        /** 80px */
+        large9: '5rem',
+        /** 96px */
+        large10:  '6rem',
     },
     logoSizes: {
         /** 40px */
