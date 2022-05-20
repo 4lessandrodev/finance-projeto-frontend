@@ -19,8 +19,9 @@ export const LinkStyle = styled.div<LinkStyleProps>`
 	font-size: ${({ theme, fontSize }: Params) => theme.font.sizes[fontSize]};
 	width: 100%;
 	background-color: transparent;
+	transition: all 0.2s ease-in-out;
 	text-transform: ${({ theme, textTransform }: Params) => theme.font.textTransform[textTransform]};
 	&:hover {
-		color: ${({ theme, hoverColor }: Params ) => theme.colors[hoverColor] };;
+		color: ${({ theme, hoverColor }: Params ) => theme.colors[hoverColor] };
 	}
 `;
