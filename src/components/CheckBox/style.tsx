@@ -12,8 +12,9 @@ export const InputStyle = styled.input<InputStyleProps>`
 	align-items: center;
 	height: 18px;
 	width: 18px;
+	cursor: pointer;
 	&:checked::after {
-		content: '✘';
+		content: '✓';
 		padding: 0 0.25rem 0.1rem;
 		background: ${({ color, theme }: IThemeProvider & InputStyleProps) => theme.colors[color]};
 		justify-content: center;
@@ -28,6 +29,7 @@ export interface LabelStyleProps {
 	size: keyof ISizes;
 	color: keyof IColors;
 	weight: keyof IWeights;
+	colorHover: keyof IColors;
 }
 
 export const LabelStyle = styled.label<LabelStyleProps>`
@@ -37,6 +39,7 @@ export const LabelStyle = styled.label<LabelStyleProps>`
 	&:hover{
 		cursor: pointer;
 		font-weight: ${({ theme }: IThemeProvider) => theme.font.weights.bold};
+		color: ${({ colorHover, theme }: IThemeProvider & LabelStyleProps) => theme.colors[colorHover]};
 	}
 `
 
@@ -44,6 +47,7 @@ export const Wrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 	> :first-child {
 		margin-right: 0.5rem;
 	}

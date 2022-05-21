@@ -5,8 +5,9 @@ export interface CheckBoxProps extends Partial<LabelStyleProps> {
 	labelPosition: 'left' | 'right';
 	isChecked: boolean;
 	name: string;
-	onClick: () => void;
 	onChange: () => void;
+	onLabelClick?: () => void; 
+	required?: boolean
 }
 
 export default function CheckBox({
@@ -17,11 +18,21 @@ export default function CheckBox({
 	color = 'black',
 	size = 'regular2',
 	weight = 'regular',
-	onChange
+	colorHover = 'orange',
+	required = false,
+	onChange,
+	onLabelClick
 }: CheckBoxProps) {
-
+	
 	const isLabelOnTheRight = labelPosition === 'right';
-	const Label = <LabelStyle htmlFor={name} color={color} size={size} weight={weight}>{label}</LabelStyle>;
+	const Label = <LabelStyle
+	htmlFor={name}
+	color={color}
+		size={size}
+		weight={weight}
+		onClick={onLabelClick}
+		colorHover={colorHover}
+	>{label}</LabelStyle>;
 
 	return (
 		<Wrapper>
@@ -33,6 +44,7 @@ export default function CheckBox({
 				checked={isChecked}
 				onChange={onChange}
 				color={color}
+				required={required}
 			/>
 			{isLabelOnTheRight && Label}
 		</Wrapper>

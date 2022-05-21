@@ -1,7 +1,7 @@
 import { ContainerIcon, Group, InputStyle, InputStyleProps, LabelType, Wrapper } from "./style";
 import IconShow from '../../assets/eye-regular.svg';
 import IconHide from '../../assets/eye-slash-regular.svg';
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 export type InputType = 'password' | 'number' | 'email' | 'date' | 'search' | 'text' | 'tel';
 
 interface InputProps extends Partial<InputStyleProps> {
@@ -12,6 +12,7 @@ interface InputProps extends Partial<InputStyleProps> {
 	name: string;
 	label?: string;
 	require?: boolean;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
@@ -24,7 +25,8 @@ export default function Input({
 	require,
 	borderColor = 'orange',
 	fontSize = 'regular3',
-	fontColor = 'gray1'
+	fontColor = 'gray1',
+	onChange
 }: InputProps) {
 
 	const [isVisible, setVisible] = useState(false);
@@ -56,6 +58,7 @@ export default function Input({
 						id={id}
 						name={name}
 						required={require}
+						onChange={(e) => onChange(e)}
 					/>
 					{
 						(

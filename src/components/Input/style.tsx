@@ -14,8 +14,8 @@ const GetBorder = (theme: ITheme) => ({
 });
 
 export const InputStyle = styled.input<InputStyleProps>`
-	padding: 0.5rem;
-	border-radius: 0.3rem;
+	padding: 0.7rem;
+	border-radius: 0.5rem;
 	border: 2px solid ${({ theme, borderColor }: IThemeProvider & InputStyleProps) => GetBorder(theme)[borderColor]};
 	width: 100%;
 	position: relative;
@@ -28,7 +28,7 @@ export const InputStyle = styled.input<InputStyleProps>`
 export const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	position: absolute;
+	position: relative;
 	width: 100%;
 	justify-content: center;
 	align-items: center;

@@ -2,7 +2,8 @@ import { InputButtonStyle, InputStyle } from "./style";
 
 export interface InputButtonProps extends Partial<InputStyle>{
 	value: string;
-	onClick: () => void;
+	onClick?: () => void;
+	type?: 'button' | 'submit';
 }
 
 export default function InputButton({
@@ -14,10 +15,11 @@ export default function InputButton({
 	weight = 'bold',
 	fontSize = 'regular5',
 	height = 'medium5',
+	type='button'
 }: InputButtonProps) {
 	return (
 		<InputButtonStyle
-			type="button"
+			type={type}
 			value={value}
 			color={color}
 			backgroundColor={backgroundColor}

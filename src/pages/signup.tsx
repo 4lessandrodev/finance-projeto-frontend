@@ -5,7 +5,7 @@ import SignForm from '../components/SignForm';
 const Home: NextPage = () => {
   return (
     <SignLayout>
-      <SignForm formType='SignIn'/>
+      <SignForm formType='SignUp'/>
     </SignLayout>
   )
 }
