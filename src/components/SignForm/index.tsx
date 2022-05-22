@@ -5,7 +5,9 @@ import Logo from '../Logo';
 import Link from '../Link';
 import CheckBox from '../CheckBox';
 import InputButton from '../InputButton';
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import SignUpService from "../../services/signIn";
+import SignInService from "../../services/signUp";
 
 export interface SignFormProps {
 	formType: 'SignIn' | 'SignUp'
@@ -17,6 +19,14 @@ export default function SignForm({ formType }: SignFormProps) {
 	const [password, setPassword] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 
+	const { signUp, error: signupError } = SignUpService();
+	const { signIn, error: signInError } = SignInService();
+
+	useEffect(() => {
+		if (signupError) alert(`Algo deu errado... ${signupError.message}`);
+		if (signInError) alert(`Algo deu errado... ${signInError.message}`);
+	}, [signupError, signInError])
+
 	const handlePassword = (e: ChangeEvent<HTMLInputElement>): void => {
 		setPassword(e.target.value)
 	}
@@ -25,11 +35,38 @@ export default function SignForm({ formType }: SignFormProps) {
 		setEmail(e.target.value)
 	}
 
+	const handleCheck = (): void => {
+		setChecked(!isChecked);
+	}
+
 	const isSignIn = formType === 'SignIn';
 	const titleLabel = isSignIn ? "Realize seu Login": "Cadastre-se gratuitamente";
 	const linkLabel = isSignIn ? "Não tenho cadastro" : "Já tenho cadastro";
 	const buttonLabel = isSignIn ? "Entrar" : "Cadastrar";
 	const linkPath = isSignIn ? "/signup" : "/signin";
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		
+		!isSignIn && signUp({
+			variables: {
+				SignupInput: {
+					acceptedTerms: isChecked,
+					email,
+					password
+				}
+			}
+		});
+
+		isSignIn && signIn({
+			variables: {
+				SigninInput: {
+					email,
+					password
+				}
+			}
+		})
+	}
 
 	return (
 		<Wrapper>
@@ -41,7 +78,7 @@ export default function SignForm({ formType }: SignFormProps) {
 				color="green"
 				textTransform="none"
 			/>
-			<SignFormStyle method="POST" action="/home" onSubmit={()=> alert('Submit')}>
+			<SignFormStyle method="POST" action="/home" onSubmit={handleSubmit}>
 				<Input
 					type="email"
 					name="email"
@@ -60,7 +97,7 @@ export default function SignForm({ formType }: SignFormProps) {
 					require
 					onChange={handlePassword}
 				/>
-				<Group>
+				<Group isSignIn={isSignIn}>
 					<Link
 						url={linkPath}
 						value={linkLabel}
@@ -72,7 +109,7 @@ export default function SignForm({ formType }: SignFormProps) {
 						labelPosition="right"
 						name="termos"
 						isChecked={isChecked}
-						onChange={() => setChecked(!isChecked)}
+						onChange={handleCheck}
 						onLabelClick={() => alert('Clicou na label')}
 						weight={'bold'}
 						color='green'

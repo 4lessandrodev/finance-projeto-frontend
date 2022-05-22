@@ -8,7 +8,8 @@ export const Wrapper = styled.div`
 	min-height: 100vh;
 	justify-content: center;
 	align-items: center;
-	`;
+	overflow: hidden;
+`;
 
 export const Container = styled.div`
 box-shadow: 0px 5px 11px 2px rgba(0,0,0,0.1);
@@ -18,6 +19,10 @@ box-shadow: 0px 5px 11px 2px rgba(0,0,0,0.1);
 	align-items: center;
 	border-radius: 40px;
 	background-color: white;
-	min-width: 30%;
-	min-height: 50vh;
+	width: 550px;
+	height: auto;
+	@media (max-width: 600px){
+		width: 90%;
+		min-width: 420px;
+	}
 `;

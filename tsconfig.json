@@ -33,6 +33,24 @@
       ],
       "@model/*": [
         "src/model/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@queries": [
+        "src/queries/index"
+      ],
+      "@mutations": [
+        "src/mutations/index"
+      ],
+      "@services/*": [
+        "src/services/*"
       ]
     },
   },

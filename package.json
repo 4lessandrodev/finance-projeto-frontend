@@ -9,10 +9,12 @@
     "lint": "next lint",
     "export": "next export -o build",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "generate:gql": "graphql-codegen --config ./code-gen.yml"
   },
   "dependencies": {
-    "@types/styled-components": "^5.1.25",
+    "@apollo/client": "^3.6.4",
+    "graphql": "^16.5.0",
     "module-alias": "^2.2.2",
     "next": "12.1.6",
     "react": "18.1.0",
@@ -20,7 +22,11 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
     "@babel/core": "^7.17.10",
+    "@types/styled-components": "^5.1.25",
+    "@graphql-codegen/typescript": "^2.4.11",
+    "@graphql-codegen/typescript-resolvers": "^2.6.4",
     "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-interactions": "^6.4.22",
@@ -47,6 +53,11 @@
     "@styles/*": "src/styles/*",
     "@types": "src/types/index",
     "@contexts/*": "src/contexts/*",
-    "@model/*": "src/model/*"
+    "@model/*": "src/model/*",
+    "@lib/*": "src/lib/*",
+    "@layouts/*": "src/layouts/*",
+    "@assets/*": "src/assets/*",
+    "@queries": "src/queries/index",
+    "@mutations": "src/mutations/index"
   }
 }

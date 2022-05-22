@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export interface GroupProps {
+	isSignIn: boolean;
+}
+
 export const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -10,7 +14,7 @@ export const Wrapper = styled.div`
 	padding: 50px;
 `;
 
-export const Group = styled.div`
+export const Group = styled.div<GroupProps>`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -18,6 +22,17 @@ export const Group = styled.div`
 	>:first-child {
 		justify-content: flex-start;
 		margin-left: 0.5rem;
+	}
+	@media (max-width: 600px){
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		height: ${({ isSignIn }: GroupProps ) => `${ !isSignIn ? '6rem' : '0'}`};
+		gap: 2rem;
+		>:first-child {
+			justify-content: center;
+			margin-left: 0;
+		}
 	}
 `;
 
@@ -33,5 +48,7 @@ export const SignFormStyle = styled.form`
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
+	min-width: 100%;
+	min-height: 100%;
 	gap: 2rem;
 `;
