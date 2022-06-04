@@ -10,7 +10,7 @@ export default function Paragraph({
 	color = 'black',
 	size = 'regular1',
 	weight = 'regular',
-	textTransform,
+	textTransform = 'none',
 }: ParagraphProps): ReactElement  {
 	return (
 			<H1

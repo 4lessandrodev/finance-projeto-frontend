@@ -4,14 +4,17 @@ import { ThemeProvider } from 'styled-components';
 import theme from '@styles/theme';
 import { ApolloProvider } from '@apollo/client';
 import apolloClient from '@lib/apollo';
+import AuthProvider from '@contexts/auth.provider';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={apolloClient}>
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </ApolloProvider>
+    <AuthProvider>
+      <ApolloProvider client={apolloClient}>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </ApolloProvider>
+    </AuthProvider>
   )
 }
 
