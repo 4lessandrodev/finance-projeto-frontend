@@ -5,16 +5,19 @@ import theme from '@styles/theme';
 import { ApolloProvider } from '@apollo/client';
 import apolloClient from '@lib/apollo';
 import AuthProvider from '@contexts/auth.provider';
+import { CookiesProvider } from 'react-cookie';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <ApolloProvider client={apolloClient}>
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </ApolloProvider>
-    </AuthProvider>
+    <CookiesProvider>
+      <AuthProvider>
+        <ApolloProvider client={apolloClient}>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </ApolloProvider>
+      </AuthProvider>
+    </CookiesProvider>
   )
 }
 

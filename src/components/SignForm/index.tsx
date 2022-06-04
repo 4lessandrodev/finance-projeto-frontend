@@ -8,6 +8,8 @@ import InputButton from '../InputButton';
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import SignUpService from "../../services/signIn";
 import SignInService from "../../services/signUp";
+import { useAuth } from "../../contexts/auth.context";
+import router from 'next/router';
 
 export interface SignFormProps {
 	formType: 'SignIn' | 'SignUp'
@@ -18,14 +20,23 @@ export default function SignForm({ formType }: SignFormProps) {
 	const [isChecked, setChecked] = useState(false);
 	const [password, setPassword] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
+	const { setToken } = useAuth();
 
-	const { signUp, error: signupError } = SignUpService();
-	const { signIn, error: signInError } = SignInService();
+	const { signUp, error: signupError, data: signUpPayload } = SignUpService();
+	const { signIn, error: signInError, data: signInPayload } = SignInService();
 
 	useEffect(() => {
 		if (signupError) alert(`Algo deu errado... ${signupError.message}`);
 		if (signInError) alert(`Algo deu errado... ${signInError.message}`);
-	}, [signupError, signInError])
+	}, [signupError, signInError]);
+
+	useEffect(() => {
+		signInPayload?.signin.token && router.push('/home');
+	}, [signInPayload]);
+
+	useEffect(() => {
+		signUpPayload?.signup && router.push('/signin');
+	}, [signUpPayload]);
 
 	const handlePassword = (e: ChangeEvent<HTMLInputElement>): void => {
 		setPassword(e.target.value)
@@ -45,10 +56,23 @@ export default function SignForm({ formType }: SignFormProps) {
 	const buttonLabel = isSignIn ? "Entrar" : "Cadastrar";
 	const linkPath = isSignIn ? "/signup" : "/signin";
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const signInHandler = async () => {
+		const result = await signIn({
+			variables: {
+				SigninInput: {
+					email,
+					password
+				}
+			}
+		});
+
+		const token = result.data?.signin.token;
+		setToken(token);
 		
-		!isSignIn && signUp({
+	}
+
+	const signUpHandler = async () => {
+		await signUp({
 			variables: {
 				SignupInput: {
 					acceptedTerms: isChecked,
@@ -57,15 +81,12 @@ export default function SignForm({ formType }: SignFormProps) {
 				}
 			}
 		});
+	}
 
-		isSignIn && signIn({
-			variables: {
-				SigninInput: {
-					email,
-					password
-				}
-			}
-		})
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		!isSignIn && signUpHandler();
+		isSignIn && signInHandler();
 	}
 
 	return (
