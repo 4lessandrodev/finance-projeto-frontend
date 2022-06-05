@@ -6,4 +6,5 @@ export const NavStyle = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 	gap: 1rem;
+	width: 100%;
 `;

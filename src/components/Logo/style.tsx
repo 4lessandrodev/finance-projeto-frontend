@@ -9,7 +9,7 @@ export interface LogoProps {
 }
 
 const GetLogoColor = (theme: ITheme) => ({
-	default: { color1: theme.colors.orange, color2: theme.colors.green },
+	default: { color1: theme.colors.orange, color2: theme.colors.white },
 	dark: { color1: theme.colors.gray1, color2: theme.colors.black },
 	light: { color1: theme.colors.white, color2: theme.colors.gray5 },
 })
