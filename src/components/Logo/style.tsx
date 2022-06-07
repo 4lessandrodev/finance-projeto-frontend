@@ -16,6 +16,7 @@ const GetLogoColor = (theme: ITheme) => ({
 
 export const IMG = styled.div<LogoProps>`
 	alt: "logo";
+	min-width: 70px;
 	width: ${({ size, theme }) => theme.logoSizes[size]};
 	height: ${({ size, theme }) => theme.logoSizes[size]};
 	>:first-child path {

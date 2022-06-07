@@ -12,7 +12,7 @@ export default function Link({
 	value,
 	target,
 	color = 'black',
-	fontSize = 'regular3',
+	fontSize = 'regular4',
 	hoverColor = 'white',
 	textTransform = 'none'
 }: LinkProps) {

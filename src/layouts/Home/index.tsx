@@ -1,26 +1,34 @@
 import { ReactElement } from "react";
-import { Container, Header, Flex, ContainerBox } from "./style";
+import {
+	Container,
+	Header,
+	Flex,
+	ContainerBox,
+	MenuContainer,
+	FilterContainer,
+	HeaderWrapper,
+	MainContainer,
+	ContainerData,
+	DataWrapper
+} from "./style";
 import Logo from '../../components/Logo'
 import Nav from "@components/Nav";
 import BudgetBox from '../../components/BoxButton'
+import Title from "@components/Title";
 
 export default function HomeLayout({children}: { children?: ReactElement }) {
 	return (
-		<>
+		<MainContainer>
 			<Header>
-				<Flex width={100}>
+				<HeaderWrapper>
 					<Flex width={15}>
 						<Logo color="default" />
 					</Flex>
-					<Flex width={50}>
+					<MenuContainer>
 						<Nav linkProps={[
 						{
 							url: '/home',
 							value: 'Caixas'
-						},
-						{
-							url: '/accounts',
-							value: 'Contas-a-pagar'
 						},
 						{
 							url: '/dashboard',
@@ -30,12 +38,12 @@ export default function HomeLayout({children}: { children?: ReactElement }) {
 							url: '/profile',
 							value: 'Perfil'
 						}
-							]} />
-					</Flex>
-					<Flex width={35}>
+						]} />
+					</MenuContainer>
+					<FilterContainer>
 						filtro
-					</Flex>
-				</Flex>
+					</FilterContainer>
+				</HeaderWrapper>
 			</Header>
 			<Container>
 				<ContainerBox>	
@@ -45,11 +53,18 @@ export default function HomeLayout({children}: { children?: ReactElement }) {
 					<BudgetBox label="Investimento" value={200}/>
 					<BudgetBox label="Testes" value={700}/>
 					<BudgetBox label="Outros" value={150}/>
-					<BudgetBox color="gray4" borderStyle="dotted"/>
+					<BudgetBox color="gray3" borderStyle="dashed"/>
 					<BudgetBox label="total" icon="dollar" backgroundColor="green" color="white" value={20} valueColor="gray5" borderStyle="solid"/>
 				</ContainerBox>
-				{ children }
 			</Container>
-		</>
+			<Container>
+				<ContainerData>
+					<Title value="Lançamentos" weight="bold" as="h2" size="regular3" />
+					<DataWrapper>
+						data...
+					</DataWrapper>
+				</ContainerData>
+			</Container>
+		</MainContainer>
 	)
 }

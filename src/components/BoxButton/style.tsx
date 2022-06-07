@@ -14,7 +14,6 @@ const GetBorderStyle = (theme: ITheme, borderStyle?: BorderStyle, color?: keyof 
 	if (borderStyle && color) {
 		const colorValue = theme.colors[color];
 		const style = `${'2px ' + borderStyle + ' ' + colorValue}`;
-		console.log(style)
 		return style;
 	}
 	return 'none';
@@ -25,7 +24,9 @@ export const Wrapper = styled.div<WrapperProps>`
 	flex-direction: column;
 	background-color: ${({ theme, backgroundColor }: IThemeProvider & WrapperProps ) => `${theme.colors[backgroundColor]}`};
 	height: 170px;
+	min-height: 170px;
 	width: 250px;
+	min-width: 250px;
 	border: ${({ theme, borderStyle, color })=> GetBorderStyle(theme, borderStyle, color )};
 	border-radius: 15px;
 	padding: 1rem 1.7rem;
