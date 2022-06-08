@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_MY_BUDGET_BOXES } from "@queries";
+import { GET_MY_BUDGET_BOXES } from "../../queries";
 import { Query } from "@types";
 
 type BudgetBoxResultType = Pick<Query, 'getBudgetBoxes'>;

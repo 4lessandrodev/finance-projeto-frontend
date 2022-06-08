@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { SIGNIN_MUTATION } from "@mutations";
+import { SIGNIN_MUTATION } from "../../mutations";
 import { Mutation, MutationSigninArgs } from "@types";
 
 type SignInResultType = Pick<Mutation, 'signin'>;

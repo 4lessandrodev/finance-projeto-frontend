@@ -20,12 +20,15 @@ export default {
 } as ComponentMeta<typeof SignForm>;
 
 const Template: ComponentStory<typeof SignForm> = (args: any) => <div style={{
-	backgroundColor: '#ededed',
+	backgroundColor: '#dcdcdc',
 	display: 'flex',
 	width: '35%',
 	padding: '1rem',
 	height: '90vh',
-	position: 'absolute'
+	position: 'relative',
+	borderRadius: '7px',
+	justifyContent: 'center',
+	alignItems: 'center'
 }}><SignForm {...args} /></div>;
 
 export const SignIn = Template.bind({});

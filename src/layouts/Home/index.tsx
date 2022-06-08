@@ -12,9 +12,9 @@ import {
 	DataWrapper
 } from "./style";
 import Logo from '../../components/Logo'
-import Nav from "@components/Nav";
+import Nav from "../../components/Nav";
 import BudgetBox from '../../components/BoxButton'
-import Title from "@components/Title";
+import Title from "../../components/Title";
 
 export default function HomeLayout({children}: { children?: ReactElement }) {
 	return (
