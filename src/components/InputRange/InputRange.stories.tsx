@@ -1,24 +1,21 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import InputOption from './index';
+import InputRange from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'InputOption',
-  component: InputOption,
+  title: 'InputRange',
+  component: InputRange,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 	argTypes: {
 		backgroundColor: {
 		  control: { type: 'color' }
-		},
-		onChange: {
-			defaultValue: () => alert('Você clicou')
 		}
   },
-} as ComponentMeta<typeof InputOption>;
+} as ComponentMeta<typeof InputRange>;
 
-const Template: ComponentStory<typeof InputOption> = (args: any) => <div style={{
+const Template: ComponentStory<typeof InputRange> = (args: any) => <div style={{
 	backgroundColor: args?.backgroundColor ?? '#efefef',
 	display: 'flex',
 	width: '400px',
@@ -27,21 +24,14 @@ const Template: ComponentStory<typeof InputOption> = (args: any) => <div style={
 	padding: '1rem',
 	height: '120px',
 	position: 'absolute'
-}}><InputOption {...args} /></div>;
+}}><InputRange {...args} /></div>;
 
-export const BoxType = Template.bind({});
+export const Text = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-BoxType.args = {
-	label: 'Tipo de caixa',
-	name: 'tipo-caixa',
-	options: [
-		{
-			isSelected: false,
-			value: 'Percentual'
-		},
-		{
-			isSelected: false,
-			value: 'Benefício'
-		}
-	]
+Text.args = {
+	value: 10,
+	label: 'Percentual',
+	step: 0.5,
+	min: 0,
+	max: 100
 };

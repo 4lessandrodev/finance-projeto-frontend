@@ -55,7 +55,7 @@ export const LabelType = styled.label<LabelProps>`
 	font-weight: ${({ theme }: IThemeProvider) => theme.font.weights.medium};
 	color: ${({ theme, fontColor }: IThemeProvider & LabelProps) => theme.colors[fontColor]};
 	text-transform: capitalize;
-`
+`;
 
 export const Group = styled.div`
 	display: flex;
