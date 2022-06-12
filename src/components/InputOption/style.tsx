@@ -19,7 +19,7 @@ export const InputStyle = styled.select<InputStyleProps>`
 	width: 100%;
 	cursor: pointer;
 	font-size: 0.9rem;
-	padding: 0.4rem;
+	padding: 0.7rem;
 	border-radius: 0.5rem;
 	border: 2px solid ${({ theme, borderColor }: IThemeProvider & InputStyleProps) => GetBorder(theme)[borderColor]};
 	background-color: white;
@@ -36,7 +36,7 @@ export const LabelStyle = styled.label<LabelStyleProps>`
 	align-items: flex-start;
 	width: 100%;
 	padding-bottom: 0.8rem;
-	font-size: ${({ theme }: IThemeProvider) => theme.font.sizes.regular4};
+	font-size: ${({ theme }: IThemeProvider) => theme.font.sizes.regular3};
 	font-weight: ${({ theme }: IThemeProvider) => theme.font.weights.medium};
 	color: ${({ theme, fontColor }: IThemeProvider & LabelStyleProps) => theme.colors[fontColor]};
 	text-transform: capitalize;

@@ -23,7 +23,7 @@ export default function BoxAllocationStatus(props: Props) {
 					</Step>
 				)
 			}
-			<Step color="white" width={pendingToAllocate} title="Total livre" backgroundColor="green">
+			<Step color="white" width={pendingToAllocate} title="Total livre" backgroundColor="orange">
 				<Text weight>{pendingToAllocate}%</Text>
 				<Text>Total livre</Text>
 			</Step>

@@ -15,7 +15,7 @@ export const Container = styled.div`
 export interface SizeProps {
 	width: number;
 	color: 'white' | 'black';
-	backgroundColor: 'green' | 'gray4';
+	backgroundColor: 'green' | 'gray4' | 'orange';
 }
 
 export const Step = styled.div<SizeProps>`
@@ -24,6 +24,7 @@ export const Step = styled.div<SizeProps>`
 	cursor: pointer;
 	width: ${({ width }: SizeProps) => width}%;
 	height: 42px;
+	border-radius: 4px;
 	align-items: flex-start;
 	justify-content: center;
 	color: ${({ color, theme }: SizeProps & IThemeProvider) => theme.colors[color]};

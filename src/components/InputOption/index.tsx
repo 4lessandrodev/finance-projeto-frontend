@@ -2,12 +2,11 @@ import { InputStyle, LabelStyleProps, LabelStyle, Wrapper, Option, InputStylePro
 
 export interface OptionProps {
 	value: string | number;
-	isSelected: boolean;
+	isSelected?: boolean;
 }
 
 export interface CheckBoxProps extends Partial<LabelStyleProps & InputStyleProps> {
 	label: string;
-	isChecked: boolean;
 	multiple: boolean;
 	name: string;
 	onChange: () => void;
