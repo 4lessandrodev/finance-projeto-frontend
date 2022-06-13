@@ -15,7 +15,7 @@ export const Container = styled.div`
 export interface SizeProps {
 	width: number;
 	color: 'white' | 'black';
-	backgroundColor: 'green' | 'gray4' | 'orange';
+	backgroundColor: 'green' | 'gray4' | 'orange' | 'gray3';
 }
 
 export const Step = styled.div<SizeProps>`

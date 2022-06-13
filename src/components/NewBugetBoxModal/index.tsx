@@ -1,18 +1,33 @@
 import Title from '../../components/Title';
 import Modal from 'react-modal';
-import { Container, Content, Group, TopLine } from './style';
+import { Container, Form, Group, TopLine } from './style';
 import Input from '../../components/Input';
 import InputOptions from '../../components/InputOption';
 import BoxAllocationStatus from '../../components/BoxAllocationStatus';
 import InputRange from '../../components/InputRange';
 import InputButton from '../../components/InputButton';
+import CloseButton from '../../components/BtnClose';
+import { useState } from 'react';
+import NewBudgetBoxModel from '../../domain/models/NewBudgetBoxModel';
 
 export interface Props {
-	children?: any;
 	isOpen: boolean;
 }
 
-export default function NewBudgetBoxModal({ children, isOpen }: Props) {
+export default function NewBudgetBoxModal({ isOpen }: Props) {
+
+	const [model, setModel] = useState<NewBudgetBoxModel>(NewBudgetBoxModel.create({
+		budgetPercentage: 0.5,
+		description: ' ',
+		isPercentage: true,
+		totalAvailable: 90
+	}));
+
+	const handleBudgetBoxType = (type: string) => {
+		if (type === 'Percentual') return setModel(model.setAsPercentage());
+		if (type !== 'Percentual') return setModel(model.setAsNotPercentage());
+	}
+
 	return (
 		<Modal isOpen={isOpen} style={
 			{
@@ -37,13 +52,17 @@ export default function NewBudgetBoxModal({ children, isOpen }: Props) {
 		}>
 			<Container>
 				<TopLine />
-				<Content>
+				<Group right={1.5} left={1.5} top={0.5}>
 					<Title value='Novo Caixa' weight='bold' as='h2'/>
-					<Group top={1}>
+					<CloseButton />
+				</Group>
+				<Form action='/create-budget-box' autoComplete='false' method='POST'>
+					<Group>
 						<Input
-							type='text' value={''}
-							id="description" name=''
-							onChange={() => alert('')}
+							type='text' value={model.description}
+							id="budget-box-description"
+							name='budget-box-description'
+							onChange={(e) => setModel(model.changeDescription(e.target.value))}
 							label="descrição"
 						/>
 					</Group>
@@ -51,30 +70,38 @@ export default function NewBudgetBoxModal({ children, isOpen }: Props) {
 						<InputOptions
 							multiple={false}
 							label="Tipo de Caixa"
-							name='tipo-de-caixa'
-							onChange={() => alert('changed')}
+							name='budget-box-type'
+							defaultValue={'Percentual'}
+							onChange={(e) => handleBudgetBoxType(e.target.value)}
 							options={[
 								{
-									value: 'Benefício'
+									value: 'Benefício',
 								},
 								{
-									value: 'Percentual'
+									value: 'Percentual',
 								}
 							]}
 						/>
 					</Group>
-					<Group top={1} right={0.5} left={0.5}>
-						<InputRange value={0} label="Alocar" />
-					</Group>
-					<Group top={1} right={0.5} left={0.5}>
+					{model.isPercentage && (
+						<Group top={1} right={0.5} left={0.5}>
+							<InputRange
+								value={model.budgetPercentage}
+								label="Alocar"
+								name='budget-box-percentage'
+								onChange={(e) => setModel(model.setPercentage(e.target.value))}
+							/>
+						</Group>
+					)}
+					{model.isPercentage && (<Group top={1} right={0.5} left={0.5}>
 						<BoxAllocationStatus data={[{
 							title: 'box 1',
 							value: 10
 						}]} />
-					</Group>
-				</Content>
+					</Group>)}
+				</Form>
 				<Group top={2}>
-					<InputButton value='confirmar' backgroundColor='green' height={'large4'} />
+					<InputButton value='confirmar' backgroundColor='green' height={'large4'} type={'submit'} />
 				</Group>
 			</Container>
 		</Modal>

@@ -9,9 +9,10 @@ export interface CheckBoxProps extends Partial<LabelStyleProps & InputStyleProps
 	label: string;
 	multiple: boolean;
 	name: string;
-	onChange: () => void;
+	onChange: (e: any) => void;
 	required?: boolean;
 	options: OptionProps[];
+	defaultValue?: string | number;
 }
 
 export default function CheckBox({
@@ -22,7 +23,8 @@ export default function CheckBox({
 	multiple = false,
 	onChange,
 	fontColor = 'gray3',
-	borderColor = 'orange'
+	borderColor = 'orange',
+	defaultValue
 }: CheckBoxProps) {
 	
 	const Label = <LabelStyle
@@ -41,6 +43,7 @@ export default function CheckBox({
 				required={required}
 				multiple={multiple}
 				borderColor={borderColor}
+				defaultValue={defaultValue}
 			>
 				{options.length && options.map((opt, index) => <Option
 					key={`${index}-${opt.value}`}

@@ -17,13 +17,15 @@ export const Container = styled.div`
 	flex-direction: column;
 	height: 100%;
 	width: 100%;
-	min-width: 700px;
+	min-width: 370px;
+	@media (min-width: 700px){
+		min-width: 700px;
+	}
 `;
 
-export const Content = styled.div`
+export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
-	min-width: 700px;
 	padding: 1rem 1rem 0 1rem;
 `;
 
@@ -35,8 +37,11 @@ interface GroupProps {
 }
 
 export const Group = styled.div<GroupProps>`
-	margin-left: ${({ left = 0 }: GroupProps) => left}rem;
-	margin-top: ${({ top = 0 }: GroupProps) => top}rem;
-	margin-bottom: ${({ bottom = 0 }: GroupProps) => bottom}rem;
-	margin-right: ${({ right = 0 }: GroupProps) => right}rem;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding-left: ${({ left = 0 }: GroupProps) => left}rem;
+	padding-top: ${({ top = 0 }: GroupProps) => top}rem;
+	padding-bottom: ${({ bottom = 0 }: GroupProps) => bottom}rem;
+	padding-right: ${({ right = 0 }: GroupProps) => right}rem;
 `;
