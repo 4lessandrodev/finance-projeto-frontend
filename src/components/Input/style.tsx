@@ -51,7 +51,7 @@ export const LabelType = styled.label<LabelProps>`
 	align-items: flex-start;
 	width: 96%;
 	padding-bottom: 0.8rem;
-	font-size: ${({ theme }: IThemeProvider) => theme.font.sizes.regular4};
+	font-size: ${({ theme }: IThemeProvider) => theme.font.sizes.regular3};
 	font-weight: ${({ theme }: IThemeProvider) => theme.font.weights.medium};
 	color: ${({ theme, fontColor }: IThemeProvider & LabelProps) => theme.colors[fontColor]};
 	text-transform: capitalize;

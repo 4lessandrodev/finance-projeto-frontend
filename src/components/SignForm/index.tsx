@@ -8,7 +8,7 @@ import InputButton from '../InputButton';
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import SignUpService from "../../services/signIn";
 import SignInService from "../../services/signUp";
-import { useAuth } from "../../contexts/auth.context";
+import { useAuth } from "../../contexts/auth/auth.context";
 import router from 'next/router';
 
 export interface SignFormProps {

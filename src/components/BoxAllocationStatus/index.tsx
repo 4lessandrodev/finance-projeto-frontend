@@ -17,13 +17,13 @@ export default function BoxAllocationStatus(props: Props) {
 			{
 				props.data.length && props.data.map(
 					(step, index) => <Step key={`${step.value}-${index}`} title={step.title}
-						color='black' width={step.value} backgroundColor="gray4">
+						color='white' width={step.value} backgroundColor="gray3">
 						<Text weight>{step.value}%</Text>
 						<Text>{step.title}</Text>
 					</Step>
 				)
 			}
-			<Step color="white" width={pendingToAllocate} title="Total livre" backgroundColor="green">
+			<Step color="white" width={pendingToAllocate} title="Total livre" backgroundColor="orange">
 				<Text weight>{pendingToAllocate}%</Text>
 				<Text>Total livre</Text>
 			</Step>
