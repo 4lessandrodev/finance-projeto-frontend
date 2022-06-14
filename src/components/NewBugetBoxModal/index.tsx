@@ -37,7 +37,7 @@ export default function NewBudgetBoxModal({ isOpen }: Props) {
 				  left: 0,
 				  right: 0,
 				  bottom: 0,
-				  backgroundColor: 'rgba(255, 255, 255, 0.75)'
+				  backgroundColor: 'rgba(38, 38, 38, 0.75)'
 				},
 				content: {
 					top: '50%',
@@ -101,7 +101,15 @@ export default function NewBudgetBoxModal({ isOpen }: Props) {
 					</Group>)}
 				</Form>
 				<Group top={2}>
-					<InputButton value='confirmar' backgroundColor='green' height={'large4'} type={'submit'} />
+					<InputButton value='confirmar'
+						backgroundColor='green'
+						height={'large4'}
+						type={'submit'} onClick={() => alert(JSON.stringify({
+							descricao: model.description,
+							ehPercentual: model.isPercentage,
+							percentual: model.budgetPercentage
+						}))}
+					/>
 				</Group>
 			</Container>
 		</Modal>

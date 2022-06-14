@@ -1,4 +1,4 @@
-import { useAuth } from '@contexts/auth.context';
+import { useAuth } from '@contexts/auth/auth.context';
 import GetMyBudgetBoxesService from '@services/getMyBudgetBoxes';
 import type { NextPage } from 'next'
 
