@@ -27,6 +27,8 @@ const Template: ComponentStory<typeof Modal> = (args: any) => <div style={{
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
-	isOpen: true
+	isOpen: true,
+	onSubmit: async (props) => {
+		alert(JSON.stringify(props))
+	}
 };
-
