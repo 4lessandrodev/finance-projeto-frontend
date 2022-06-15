@@ -7,7 +7,8 @@ interface NewBudgetBoxModelProps {
 
 interface CheckResult {
 	isOk: boolean;
-	msg: string
+	msg: string;
+	value?: NewBudgetBoxModel;
 }
 
 export class NewBudgetBoxModel {
@@ -53,48 +54,52 @@ export class NewBudgetBoxModel {
 	};
 
 	setTotalAvailable(totalAvailable: number): NewBudgetBoxModel {
-		const model = this.clone({ totalAvailable });
-		return this.handleError(model);
+		return this.clone({ totalAvailable });
 	}
 
 	setPercentage(budgetPercentage: number): NewBudgetBoxModel {
-		const model = this.clone({ isPercentage: true, budgetPercentage });
-		return this.handleError(model);
+		return this.clone({ isPercentage: true, budgetPercentage });
 	}
 
 	setAsNotPercentage(): NewBudgetBoxModel {
-		const model = this.clone({ isPercentage: false, budgetPercentage: 100 });
-		return this.handleError(model);
+		return this.clone({ isPercentage: false, budgetPercentage: 100 });
 	}
 
 	setAsPercentage(): NewBudgetBoxModel {
-		const model = this.clone({ isPercentage: true, budgetPercentage: 0.5 });
-		return this.handleError(model);
+		return this.clone({ isPercentage: true, budgetPercentage: 0 });
 	}
 
-	changeDescription(newDescription: string): NewBudgetBoxModel {
-		const description = newDescription.length === 0 ? ' ' : newDescription;
-		const model = this.clone({ description });
-		return this.handleError(model);
+	changeDescription(description: string): NewBudgetBoxModel {
+		return this.clone({ description: description.toLowerCase() });
 	}
 
-	handleError(model: NewBudgetBoxModel): NewBudgetBoxModel {
+	handlerResult(model: NewBudgetBoxModel): CheckResult {
 		const result = model.isValidProps();
-		if(!result.isOk) throw new Error(result.msg);
-		return model;
+		if (!result.isOk) return result;
+		return { ...result, value: model };
+	}
+
+	cleanModel(): NewBudgetBoxModel {
+		return this.changeDescription('').setPercentage(0).setAsPercentage();
 	}
 
 	isValidProps(): CheckResult {
-		
-		const descriptionLength = this._description.length;
-		const isValidPercentage = this._isPercentage && this._budgetPercentage <= this._totalAvailable;
+
+		const greaterThanZero = this._budgetPercentage > 0;
+		const lessOrEqualTotalAvailable = this._budgetPercentage <= this._totalAvailable;
+		const totalAvailableGreaterOrEqualToZero = this._totalAvailable >= 0;
+		const totalAvailableLessOrEqualTo100 = this._totalAvailable <= 100;
+		const descriptionLength = this._description.trim().length;
+
+		const isValidPercentage = this._isPercentage &&  greaterThanZero && lessOrEqualTotalAvailable;
 		const isValidDescription = descriptionLength <= 30 && descriptionLength > 0;
-		const isValidTotalAvailable = this._totalAvailable >= 0 && this._totalAvailable <= 100;
+		const isValidTotalAvailable = totalAvailableGreaterOrEqualToZero && totalAvailableLessOrEqualTo100;
+
 		if (!isValidPercentage && this._isPercentage) return { msg: this.invalidPercentageMessage, isOk: false };
 		if (!isValidDescription) return { msg: this.invalidDescriptionMessage, isOk: false };
 		if (!isValidTotalAvailable) return { msg: this.invalidTotalAvailableMessage, isOk: false };
 
-		return { isOk: true, msg: 'ok' };
+		return { isOk: true, msg: 'ok', value: this };
 	}
 
 	public static createNotPercentageModel(description: string, totalAvailable: number): NewBudgetBoxModel {
@@ -102,8 +107,7 @@ export class NewBudgetBoxModel {
 	}
 
 	public static create(props: NewBudgetBoxModelProps): NewBudgetBoxModel {
-		const model = new NewBudgetBoxModel(props);
-		return model.handleError(model);
+		return new NewBudgetBoxModel(props);
 	}
 }
 
