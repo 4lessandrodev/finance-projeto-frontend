@@ -41,4 +41,5 @@ export const Text = styled.p<PProps>`
 	margin: 0 7%;
 	font-size: 12px;
 	font-weight: ${({ weight }: PProps) => `${weight ? 'bold' : ''}`};
+	text-transform: capitalize;
 `;
