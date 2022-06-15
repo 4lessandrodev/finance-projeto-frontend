@@ -26,6 +26,7 @@ export default function Input({
 	borderColor = 'orange',
 	fontSize = 'regular3',
 	fontColor = 'gray1',
+	textTransform='none',
 	onChange
 }: InputProps) {
 
@@ -59,6 +60,7 @@ export default function Input({
 						name={name}
 						required={require}
 						onChange={(e) => onChange(e)}
+						textTransform={textTransform}
 					/>
 					{
 						(
