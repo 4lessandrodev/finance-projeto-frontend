@@ -1,31 +1,58 @@
 import Title from '../../components/Title';
 import Modal from 'react-modal';
-import { Container, Form, Group, TopLine } from './style';
+import { Container, Form, FormContent, Group, TopLine } from './style';
 import Input from '../../components/Input';
 import InputOptions from '../../components/InputOption';
 import BoxAllocationStatus from '../../components/BoxAllocationStatus';
 import InputRange from '../../components/InputRange';
 import InputButton from '../../components/InputButton';
 import CloseButton from '../../components/BtnClose';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import NewBudgetBoxModel from '../../domain/models/NewBudgetBoxModel';
+import { useBudgetBoxes } from '../../contexts/my-budget-boxes/my-budget-boxes.context';
+
+export interface SubmitProps {
+	description: string;
+	isPercentage: boolean;
+	budgetPercentage: number;
+}
 
 export interface Props {
 	isOpen: boolean;
+	onSubmit: <T>(props: SubmitProps) => Promise<T|void>;
 }
 
-export default function NewBudgetBoxModal({ isOpen }: Props) {
+export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 
+	const { myBudgetBoxes, totalAvailable } = useBudgetBoxes();
 	const [model, setModel] = useState<NewBudgetBoxModel>(NewBudgetBoxModel.create({
-		budgetPercentage: 0.5,
-		description: ' ',
+		budgetPercentage: 0,
+		description: '',
 		isPercentage: true,
-		totalAvailable: 90
+		totalAvailable: totalAvailable
 	}));
 
 	const handleBudgetBoxType = (type: string) => {
 		if (type === 'Percentual') return setModel(model.setAsPercentage());
 		if (type !== 'Percentual') return setModel(model.setAsNotPercentage());
+	}
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		
+		e.preventDefault();
+		
+		const result = model.isValidProps();
+		if (!result.isOk) return alert(result.msg);
+
+		const payload = await onSubmit({
+			description: model.description,
+			budgetPercentage: model.budgetPercentage,
+			isPercentage: model.isPercentage
+		});
+		
+		setModel(model.cleanModel());
+
+		return payload;
 	}
 
 	return (
@@ -56,61 +83,72 @@ export default function NewBudgetBoxModal({ isOpen }: Props) {
 					<Title value='Novo Caixa' weight='bold' as='h2'/>
 					<CloseButton />
 				</Group>
-				<Form action='/create-budget-box' autoComplete='false' method='POST'>
-					<Group>
-						<Input
-							type='text' value={model.description}
-							id="budget-box-description"
-							name='budget-box-description'
-							onChange={(e) => setModel(model.changeDescription(e.target.value))}
-							label="descrição"
-						/>
-					</Group>
-					<Group top={1} right={0.5} left={0.5}>
-						<InputOptions
-							multiple={false}
-							label="Tipo de Caixa"
-							name='budget-box-type'
-							defaultValue={'Percentual'}
-							onChange={(e) => handleBudgetBoxType(e.target.value)}
-							options={[
-								{
-									value: 'Benefício',
-								},
-								{
-									value: 'Percentual',
-								}
-							]}
-						/>
-					</Group>
-					{model.isPercentage && (
-						<Group top={1} right={0.5} left={0.5}>
-							<InputRange
-								value={model.budgetPercentage}
-								label="Alocar"
-								name='budget-box-percentage'
-								onChange={(e) => setModel(model.setPercentage(e.target.value))}
+				<Form action='/create-budget-box'
+					autoComplete='false'
+					method='POST'
+					onSubmit={(e)=> handleSubmit(e)}>
+					<FormContent>
+						<Group>
+							<Input
+								type='text' value={model.description}
+								id="budget-box-description"
+								name='budget-box-description'
+								onChange={(e) => setModel(model.changeDescription(e.target.value))}
+								label="descrição"
+								textTransform='capitalize'
 							/>
 						</Group>
-					)}
-					{model.isPercentage && (<Group top={1} right={0.5} left={0.5}>
-						<BoxAllocationStatus data={[{
-							title: 'box 1',
-							value: 10
-						}]} />
-					</Group>)}
-				</Form>
-				<Group top={2}>
+						<Group top={1} right={0.5} left={0.5}>
+							<InputOptions
+								multiple={false}
+								label="Tipo de Caixa"
+								name='budget-box-type'
+								defaultValue={'Percentual'}
+								onChange={(e) => handleBudgetBoxType(e.target.value)}
+								options={[
+									{
+										value: 'Benefício',
+									},
+									{
+										value: 'Percentual',
+									}
+								]}
+							/>
+						</Group>
+						{model.isPercentage && (
+							<Group top={1} right={0.5} left={0.5}>
+								<InputRange
+									value={model.budgetPercentage}
+									label="Alocar"
+									name='budget-box-percentage'
+									onChange={(e) => setModel(model.setPercentage(e.target.value))}
+								/>
+							</Group>
+						)}
+						{model.isPercentage && (<Group top={1} right={0.5} left={0.5}>
+							<BoxAllocationStatus data={
+								myBudgetBoxes.map((box) => (
+									{
+										title: box.description,
+										value: box.budgetPercentage
+									}
+								)).concat([
+									{
+										title: model.description,
+										value: model.budgetPercentage
+									}
+								])
+							} />
+						</Group>)}
+					</FormContent>
+					<Group top={2}>
 					<InputButton value='confirmar'
 						backgroundColor='green'
 						height={'large4'}
-						type={'submit'} onClick={() => alert(JSON.stringify({
-							descricao: model.description,
-							ehPercentual: model.isPercentage,
-							percentual: model.budgetPercentage
-						}))}
+						type={'submit'}
 					/>
-				</Group>
+					</Group>
+				</Form>
 			</Container>
 		</Modal>
 	)

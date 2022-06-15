@@ -6,6 +6,7 @@ export interface InputStyleProps {
 	fontSize: keyof ISizes;
 	fontColor: keyof IColors;
 	isPassword: boolean;
+	textTransform: 'none' | 'capitalize' | 'uppercase' | 'lowercase'
 }
 
 const GetBorder = (theme: ITheme) => ({
@@ -23,6 +24,7 @@ export const InputStyle = styled.input<InputStyleProps>`
 	margin: ${({ isPassword }: InputStyleProps) => isPassword ? '0rem' : '0 0.5rem'};
 	font-size:  ${({ theme, fontSize }: IThemeProvider & InputStyleProps) => theme.font.sizes[fontSize]};
 	color:  ${({ theme, fontColor }: IThemeProvider & InputStyleProps) => theme.colors[fontColor]};
+	text-transform: ${({ textTransform }: InputStyleProps) => textTransform};
 `;
 
 export const Wrapper = styled.div`
