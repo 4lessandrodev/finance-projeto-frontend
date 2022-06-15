@@ -26,6 +26,11 @@ export const Container = styled.div`
 export const Form = styled.form`
 	display: flex;
 	flex-direction: column;
+`;
+
+export const FormContent = styled.form`
+	display: flex;
+	flex-direction: column;
 	padding: 1rem 1rem 0 1rem;
 `;
 
