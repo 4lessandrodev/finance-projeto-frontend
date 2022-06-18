@@ -91,7 +91,7 @@ export default function SignForm({ formType }: SignFormProps) {
 
 	return (
 		<Wrapper>
-			<Logo />
+			<Logo color="orange"/>
 			<Title
 				value={titleLabel}
 				size="regular2"

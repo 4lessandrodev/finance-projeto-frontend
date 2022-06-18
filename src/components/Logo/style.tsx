@@ -1,7 +1,7 @@
 import { ILogo, ITheme } from "@types";
 import styled from "styled-components";
 
-export type LogoColor = 'default' | 'dark' | 'light';
+export type LogoColor = 'default' | 'dark' | 'light' | 'orange';
 
 export interface LogoProps {
 	size: keyof ILogo;
@@ -11,6 +11,7 @@ export interface LogoProps {
 const GetLogoColor = (theme: ITheme) => ({
 	default: { color1: theme.colors.orange, color2: theme.colors.white },
 	dark: { color1: theme.colors.gray1, color2: theme.colors.black },
+	orange: { color2: theme.colors.gray3, color1: theme.colors.orange },
 	light: { color1: theme.colors.white, color2: theme.colors.gray5 },
 })
 

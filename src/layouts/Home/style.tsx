@@ -11,10 +11,10 @@ export const MainContainer = styled.div`
 
 export const Header = styled.div`
 	display: flex;
+	width: 100%;
 	flex-direction: column;
 	background-color: ${({ theme }: IThemeProvider) => theme.colors.green };
-	justify-content: space-around;
-	align-content: space-around;
+	align-items:center ;
 `;
 
 export const Flex = styled.div<{ width: number }>`
@@ -31,6 +31,7 @@ export const Flex = styled.div<{ width: number }>`
 export const HeaderWrapper = styled.div`
 	display: inline-flex;
 	width: 100%;
+	max-width: 1480px;
 	justify-content: center;
 	align-items: center;
 	height: 23vh;
@@ -38,6 +39,9 @@ export const HeaderWrapper = styled.div`
 		display: flex;
 		flex-direction: column;
 		height: 30vh;
+	}
+	@media (min-width: 1960px){
+		max-width: 1720px;
 	}
 `;
 
@@ -85,7 +89,8 @@ export const ContainerData = styled.div`
 	width: 68%;
 	margin-left: 2%;
 	background-color: ${({ theme }: IThemeProvider) => theme.colors.gray5 };
-	@media (max-width: 750px){ 
+	max-width: 1480px;
+	@media (max-width: 750px){
 		width: 98%;
 		margin-left: 0;
 	}
@@ -113,6 +118,7 @@ export const ContainerBox = styled.div`
 	position: relative;
 	top: -15px;
 	flex-wrap: wrap;
+	max-width: 1480px;
 	> div {
 		margin-bottom: 1%;
 	}
