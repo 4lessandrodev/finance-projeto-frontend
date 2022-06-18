@@ -19,6 +19,7 @@ export class NewBudgetBoxModel {
 	private invalidDescriptionMessage = 'A descrição deve ser maior que 1 e menor que 30 caractéres';
 	private invalidPercentageMessage = 'O percentual deve ser maior que 0 e menor ou igual a ';
 	private invalidTotalAvailableMessage = 'O total disponível deve ser um valor entre 0 e 100';
+	private successMessage = 'Caixa salvo com sucesso!';
 
 	private constructor(props: NewBudgetBoxModelProps) {
 		this._budgetPercentage = props.budgetPercentage;
@@ -99,7 +100,7 @@ export class NewBudgetBoxModel {
 		if (!isValidDescription) return { msg: this.invalidDescriptionMessage, isOk: false };
 		if (!isValidTotalAvailable) return { msg: this.invalidTotalAvailableMessage, isOk: false };
 
-		return { isOk: true, msg: 'ok', value: this };
+		return { isOk: true, msg: this.successMessage, value: this };
 	}
 
 	public static createNotPercentageModel(description: string, totalAvailable: number): NewBudgetBoxModel {

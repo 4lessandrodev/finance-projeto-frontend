@@ -10,6 +10,7 @@ import CloseButton from '../../components/BtnClose';
 import { FormEvent, useState } from 'react';
 import NewBudgetBoxModel from '../../domain/models/NewBudgetBoxModel';
 import { useBudgetBoxes } from '../../contexts/my-budget-boxes/my-budget-boxes.context';
+import ToastMessage from '../../components/ToastMessage';
 
 export interface SubmitProps {
 	description: string;
@@ -32,6 +33,10 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 		totalAvailable: totalAvailable
 	}));
 
+	const [isToastVisible, setToastVisible] = useState<boolean>(false);
+	const [toastMessage, setToastMessage] = useState<string>('');
+	const [toastType, setToastType] = useState<'error' | 'info'>('info');
+
 	const handleBudgetBoxType = (type: string) => {
 		if (type === 'Percentual') return setModel(model.setAsPercentage());
 		if (type !== 'Percentual') return setModel(model.setAsNotPercentage());
@@ -42,8 +47,15 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 		e.preventDefault();
 		
 		const result = model.isValidProps();
-		if (!result.isOk) return alert(result.msg);
+		setToastMessage(result.msg);
+		setToastVisible(true);
+		
+		if (!result.isOk) {
+			setToastType('error');
+			return null;
+		}
 
+		setToastType('info');
 		const payload = await onSubmit({
 			description: model.description,
 			budgetPercentage: model.budgetPercentage,
@@ -88,6 +100,16 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 					method='POST'
 					onSubmit={(e)=> handleSubmit(e)}>
 					<FormContent>
+						{
+							isToastVisible && (<Group bottom={1.5} right={0.5} left={0.5}>
+								<ToastMessage
+									isVisible={isToastVisible}
+									message={toastMessage}
+									type={toastType}
+									closeToast={() => setToastVisible(false)}
+								/>
+							</Group>)
+						}
 						<Group>
 							<Input
 								type='text' value={model.description}

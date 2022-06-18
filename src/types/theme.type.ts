@@ -94,6 +94,10 @@ export interface IColors {
 	red: string;
 	/** #075318 */
 	green: string;
+	/** #e84646 */
+	lightRed: '#e84646',
+	/** #33a34c */
+	lightGreen: string,
 	/** #000000 */
 	black: string;
 	/** #8b8b8b */
