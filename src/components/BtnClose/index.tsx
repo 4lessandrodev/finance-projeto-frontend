@@ -1,8 +1,12 @@
 import { Container, Icon } from "./style";
 
-export default function CloseButton() {
+interface CloseButtonProps {
+	onClick: (args: any) => void;
+}
+
+export default function CloseButton({onClick}: CloseButtonProps) {
 	return (
-		<Container>
+		<Container onClick={onClick}>
 			<Icon />
 		</Container>
 	)

@@ -47,18 +47,24 @@ export class NewBudgetBoxModel {
 	};
 
 	get budgetPercentage(): number{
-		return this._budgetPercentage;
+		return this.stringToNumber(this._budgetPercentage);
 	};
 
 	get totalAvailable(): number{
-		return this._totalAvailable;
+		return this.stringToNumber(this._totalAvailable);
 	};
 
-	setTotalAvailable(totalAvailable: number): NewBudgetBoxModel {
+	setTotalAvailable(totalAvailableValue: number): NewBudgetBoxModel {
+		const totalAvailable = this.stringToNumber(totalAvailableValue);
 		return this.clone({ totalAvailable });
 	}
 
-	setPercentage(budgetPercentage: number): NewBudgetBoxModel {
+	stringToNumber(value: string | number): number {
+		return typeof value === 'string' ? parseFloat(value) : value;
+	}
+
+	setPercentage(budgetPercentageValue: number): NewBudgetBoxModel {
+		const budgetPercentage = this.stringToNumber(budgetPercentageValue);
 		return this.clone({ isPercentage: true, budgetPercentage });
 	}
 
@@ -86,10 +92,10 @@ export class NewBudgetBoxModel {
 
 	isValidProps(): CheckResult {
 
-		const greaterThanZero = this._budgetPercentage > 0;
-		const lessOrEqualTotalAvailable = this._budgetPercentage <= this._totalAvailable;
-		const totalAvailableGreaterOrEqualToZero = this._totalAvailable >= 0;
-		const totalAvailableLessOrEqualTo100 = this._totalAvailable <= 100;
+		const greaterThanZero = this.budgetPercentage > 0;
+		const lessOrEqualTotalAvailable = this.budgetPercentage <= this.totalAvailable;
+		const totalAvailableGreaterOrEqualToZero = this.totalAvailable >= 0;
+		const totalAvailableLessOrEqualTo100 = this.totalAvailable <= 100;
 		const descriptionLength = this._description.trim().length;
 
 		const isValidPercentage = this._isPercentage &&  greaterThanZero && lessOrEqualTotalAvailable;

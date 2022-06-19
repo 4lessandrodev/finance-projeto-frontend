@@ -13,3 +13,9 @@ export const SIGNIN_MUTATION = gql`
 		}
 	}
 `;
+
+export const CREATE_NEW_BUDGET_BOX = gql`
+	mutation createBudgetBox($CreateBudgetBoxInput: CreateBudgetBoxInput!) {
+		createBudgetBox(CreateBudgetBoxInput: $CreateBudgetBoxInput)
+	}
+`;

@@ -76,7 +76,6 @@ export default function SignForm({ formType }: SignFormProps) {
 
 		const token = result.data?.signin.token;
 		setToken(token);
-		
 	}
 
 	const signUpHandler = async () => {

@@ -15,8 +15,15 @@ import Logo from '../../components/Logo'
 import Nav from "../../components/Nav";
 import BudgetBox from '../../components/BoxButton'
 import Title from "../../components/Title";
+import { useBudgetBoxes } from "@contexts/my-budget-boxes/my-budget-boxes.context";
 
-export default function HomeLayout({children}: { children?: ReactElement }) {
+interface HomeLayoutProps {
+	children?: ReactElement | ReactElement[];
+	openOrCloseNewBudgetBoxModal: (isOpen: boolean) => void;
+}
+
+export default function HomeLayout({ children, openOrCloseNewBudgetBoxModal }: HomeLayoutProps) {
+	const { myBudgetBoxes, amount, totalAllocated } = useBudgetBoxes();
 	return (
 		<MainContainer>
 			<Header>
@@ -46,15 +53,28 @@ export default function HomeLayout({children}: { children?: ReactElement }) {
 				</HeaderWrapper>
 			</Header>
 			<Container>
-				<ContainerBox>	
-					<BudgetBox label="Operacionais" value={200}/>
-					<BudgetBox label="Suprimentos" value={200}/>
-					<BudgetBox label="Poupança" value={200}/>
-					<BudgetBox label="Investimento" value={200}/>
-					<BudgetBox label="Testes" value={700}/>
-					<BudgetBox label="Outros" value={150}/>
-					<BudgetBox color="gray3" borderStyle="dashed"/>
-					<BudgetBox label="total" icon="dollar" backgroundColor="green" color="white" value={20} valueColor="gray5" borderStyle="solid"/>
+				<ContainerBox>
+					{myBudgetBoxes.map((box) => (
+						<BudgetBox label={box.description}
+							value={box.balanceAvailable.value}
+							key={box.id}
+							percentage={box.budgetPercentage}
+						/>
+					))}
+					<BudgetBox color="gray3"
+						borderStyle="dashed"
+						onClick={() => openOrCloseNewBudgetBoxModal(true)}
+					/>
+					<BudgetBox
+						label="total"
+						icon="dollar"
+						backgroundColor="green"
+						color="white"
+						value={amount}
+						valueColor="gray5"
+						borderStyle="solid"
+						percentage={totalAllocated}
+					/>
 				</ContainerBox>
 			</Container>
 			<Container>

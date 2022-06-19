@@ -62,12 +62,13 @@ export default function BoxButton({
 						}
 					</UpSide>
 					<DownSide>
-						{value && (
+						{value || value === 0 && (
 							<Title value={`R$ ${value}`} weight="thin" as="h3" size="regular2" color={valueColor} />
 						)}
 						{
-							percentage >= 0 ? (
-								<Title value={`${percentage}%`} weight="thin" as="h3" size="regular2" color={color} />) : false
+							percentage >= 0 && (
+								<Title value={`${percentage}%`} weight="thin" as="h3" size="regular2" color={color} />
+							)
 						}
 					</DownSide>
 				</>

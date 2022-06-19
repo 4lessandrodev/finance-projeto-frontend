@@ -1,18 +1,19 @@
-import Title from '../../components/Title';
+import Title from '../Title';
 import Modal from 'react-modal';
 import { Container, Form, FormContent, Group, TopLine } from './style';
-import Input from '../../components/Input';
-import InputOptions from '../../components/InputOption';
-import BoxAllocationStatus from '../../components/BoxAllocationStatus';
-import InputRange from '../../components/InputRange';
-import InputButton from '../../components/InputButton';
-import CloseButton from '../../components/BtnClose';
+import Input from '../Input';
+import InputOptions from '../InputOption';
+import BoxAllocationStatus from '../BoxAllocationStatus';
+import InputRange from '../InputRange';
+import InputButton from '../InputButton';
+import CloseButton from '../BtnClose';
 import { FormEvent, useState } from 'react';
 import NewBudgetBoxModel from '../../domain/models/NewBudgetBoxModel';
 import { useBudgetBoxes } from '../../contexts/my-budget-boxes/my-budget-boxes.context';
-import ToastMessage from '../../components/ToastMessage';
+import ToastMessage from '../ToastMessage';
+import { ApolloError } from '@apollo/client';
 
-export interface SubmitProps {
+export interface SubmitNewBudgetBoxProps {
 	description: string;
 	isPercentage: boolean;
 	budgetPercentage: number;
@@ -20,10 +21,11 @@ export interface SubmitProps {
 
 export interface Props {
 	isOpen: boolean;
-	onSubmit: <T>(props: SubmitProps) => Promise<T|void>;
+	onSubmit: (props: SubmitNewBudgetBoxProps) => Promise<ApolloError | void>;
+	closeModal: (isOpened: boolean) => void;
 }
 
-export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
+export default function NewBudgetBoxModal({ isOpen, onSubmit, closeModal }: Props) {
 
 	const { myBudgetBoxes, totalAvailable } = useBudgetBoxes();
 	const [model, setModel] = useState<NewBudgetBoxModel>(NewBudgetBoxModel.create({
@@ -47,8 +49,6 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 		e.preventDefault();
 		
 		const result = model.isValidProps();
-		setToastMessage(result.msg);
-		setToastVisible(true);
 		
 		if (!result.isOk) {
 			setToastType('error');
@@ -61,10 +61,23 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 			budgetPercentage: model.budgetPercentage,
 			isPercentage: model.isPercentage
 		});
-		
-		setModel(model.cleanModel());
+		if (payload) {
+			setToastMessage(payload.message);
+			setToastVisible(true);
+			return null;
+		}
 
-		return payload;
+		setToastMessage(result.msg);
+		setToastVisible(true);
+		setModel(model.cleanModel());
+		return null;
+	}
+
+	const handleCloseModal = () => {
+		const isOpened = false;
+		setModel(model.cleanModel());
+		setToastVisible(false);
+		closeModal(isOpened);
 	}
 
 	return (
@@ -92,8 +105,8 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 			<Container>
 				<TopLine />
 				<Group right={1.5} left={1.5} top={0.5}>
-					<Title value='Novo Caixa' weight='bold' as='h2'/>
-					<CloseButton />
+					<Title value='Novo Caixa' weight='bold' as='h2' color='gray2' size='regular3' />
+					<CloseButton onClick={handleCloseModal}/>
 				</Group>
 				<Form action='/create-budget-box'
 					autoComplete='false'
@@ -144,12 +157,15 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit }: Props) {
 									label="Alocar"
 									name='budget-box-percentage'
 									onChange={(e) => setModel(model.setPercentage(e.target.value))}
+									max={totalAvailable}
 								/>
 							</Group>
 						)}
 						{model.isPercentage && (<Group top={1} right={0.5} left={0.5}>
 							<BoxAllocationStatus data={
-								myBudgetBoxes.map((box) => (
+								myBudgetBoxes
+									.filter((box) => box.isPercentage)
+									.map((box) => (
 									{
 										title: box.description,
 										value: box.budgetPercentage
