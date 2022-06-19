@@ -14,6 +14,12 @@ export const Wrapper = styled.div`
 	padding: 50px;
 `;
 
+export const ContainerMessage = styled.div`
+	display: flex; 
+	padding: 0.5rem; 
+	width: 100%;
+`;
+
 export const Group = styled.div<GroupProps>`
 	display: inline-flex;
 	justify-content: center;

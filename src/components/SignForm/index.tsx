@@ -1,4 +1,4 @@
-import { Container, Group, SignFormStyle, Wrapper } from "./style";
+import { Container, ContainerMessage, Group, SignFormStyle, Wrapper } from "./style";
 import Input from '../Input';
 import Title from '../Title';
 import Logo from '../Logo';
@@ -10,6 +10,7 @@ import SignUpService from "../../services/signIn";
 import SignInService from "../../services/signUp";
 import { useAuth } from "../../contexts/auth/auth.context";
 import router from 'next/router';
+import ToastMessage from "../../components/ToastMessage";
 
 export interface SignFormProps {
 	formType: 'SignIn' | 'SignUp'
@@ -21,20 +22,27 @@ export default function SignForm({ formType }: SignFormProps) {
 	const [password, setPassword] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const { setToken } = useAuth();
+	const [isErrorMessageVisible, setIsErrorMessageVisible] = useState<boolean>(false);
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [errorType, setErrorType] = useState<'error' | 'info'>('info');
 
 	const { signUp, error: signupError, data: signUpPayload } = SignUpService();
 	const { signIn, error: signInError, data: signInPayload } = SignInService();
 
 	useEffect(() => {
-		if (signupError) alert(`Algo deu errado... ${signupError.message}`);
-		if (signInError) alert(`Algo deu errado... ${signInError.message}`);
+		setIsErrorMessageVisible(true);
+		setErrorType('error');
+		if (signupError) return setErrorMessage(signupError.message);
+		if (signInError) return setErrorMessage(signInError.message);
 	}, [signupError, signInError]);
 
 	useEffect(() => {
+		setIsErrorMessageVisible(false);
 		signInPayload?.signin.token && router.push('/home');
 	}, [signInPayload]);
 
 	useEffect(() => {
+		setIsErrorMessageVisible(false);
 		signUpPayload?.signup && router.push('/signin');
 	}, [signUpPayload]);
 
@@ -99,6 +107,15 @@ export default function SignForm({ formType }: SignFormProps) {
 				color="green"
 				textTransform="none"
 			/>
+			{isErrorMessageVisible && (<ContainerMessage>
+				<ToastMessage
+					closeToast={() => setIsErrorMessageVisible(false)}
+					isVisible={isErrorMessageVisible}
+					message={errorMessage}
+					type={errorType}
+				/>
+			</ContainerMessage>)}
+
 			<SignFormStyle method="POST" action="/home" onSubmit={handleSubmit}>
 				<Input
 					type="email"
