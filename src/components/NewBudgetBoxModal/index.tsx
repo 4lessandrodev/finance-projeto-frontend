@@ -7,7 +7,7 @@ import BoxAllocationStatus from '../BoxAllocationStatus';
 import InputRange from '../InputRange';
 import InputButton from '../InputButton';
 import CloseButton from '../BtnClose';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import NewBudgetBoxModel from '../../domain/models/NewBudgetBoxModel';
 import { useBudgetBoxes } from '../../contexts/my-budget-boxes/my-budget-boxes.context';
 import ToastMessage from '../ToastMessage';
@@ -27,14 +27,14 @@ export interface Props {
 
 export default function NewBudgetBoxModal({ isOpen, onSubmit, closeModal }: Props) {
 
-	const { myBudgetBoxes, totalAvailable } = useBudgetBoxes();
+	const { myBudgetBoxes, totalAvailable, totalAllocated } = useBudgetBoxes();
 	const [model, setModel] = useState<NewBudgetBoxModel>(NewBudgetBoxModel.create({
 		budgetPercentage: 0,
 		description: '',
 		isPercentage: true,
-		totalAvailable: totalAvailable
+		totalAvailable
 	}));
-
+	
 	const [isToastVisible, setToastVisible] = useState<boolean>(false);
 	const [toastMessage, setToastMessage] = useState<string>('');
 	const [toastType, setToastType] = useState<'error' | 'info'>('info');
@@ -44,14 +44,37 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit, closeModal }: Prop
 		if (type !== 'Percentual') return setModel(model.setAsNotPercentage());
 	}
 
+	const handleDescription = (description: string) => {
+		if (totalAllocated - totalAvailable === 0 || totalAllocated === 100) {
+			return;
+		}
+		setModel(model.changeDescription(description));
+	}
+
+	useEffect(() => {
+		if (totalAllocated - totalAvailable === 0 || totalAllocated === 100) {
+			setToastMessage('Não há percentual disponível!');
+			setToastVisible(true);
+		}
+	}, [totalAllocated, totalAvailable]);
+
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		
 		e.preventDefault();
+
+		if (totalAllocated - totalAvailable === 0 || totalAllocated === 100) {
+			setToastMessage('Você já atingiu 100% de alocação');
+			setToastType('error');
+			setToastVisible(true);
+			return;
+		}
 		
 		const result = model.isValidProps();
 		
 		if (!result.isOk) {
 			setToastType('error');
+			setToastMessage(result.msg);
+			setToastVisible(true);
 			return null;
 		}
 
@@ -89,7 +112,8 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit, closeModal }: Prop
 				  left: 0,
 				  right: 0,
 				  bottom: 0,
-				  backgroundColor: 'rgba(38, 38, 38, 0.75)'
+					backgroundColor: 'rgba(38, 38, 38, 0.75)',
+				  overflow: 'hidden'
 				},
 				content: {
 					top: '50%',
@@ -98,7 +122,8 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit, closeModal }: Prop
 					bottom: 'auto',
 					marginRight: '-50%',
 					transform: 'translate(-50%, -50%)',
-					padding: 0
+					padding: 0,
+					overflow: 'hidden'
 				}
 			  }
 		}>
@@ -128,7 +153,7 @@ export default function NewBudgetBoxModal({ isOpen, onSubmit, closeModal }: Prop
 								type='text' value={model.description}
 								id="budget-box-description"
 								name='budget-box-description'
-								onChange={(e) => setModel(model.changeDescription(e.target.value))}
+								onChange={(e) => handleDescription(e.target.value)}
 								label="descrição"
 								textTransform='capitalize'
 							/>

@@ -12,12 +12,13 @@ interface CheckResult {
 }
 
 export class NewBudgetBoxModel {
+	private _baseMessage = 'O percentual deve ser maior que 0 e menor ou igual a ';
 	private _description: string;
 	private _isPercentage: boolean;
 	private _budgetPercentage: number;
 	private _totalAvailable: number;
 	private invalidDescriptionMessage = 'A descrição deve ser maior que 1 e menor que 30 caractéres';
-	private invalidPercentageMessage = 'O percentual deve ser maior que 0 e menor ou igual a ';
+	private invalidPercentageMessage = this._baseMessage;
 	private invalidTotalAvailableMessage = 'O total disponível deve ser um valor entre 0 e 100';
 	private successMessage = 'Caixa salvo com sucesso!';
 
@@ -26,7 +27,7 @@ export class NewBudgetBoxModel {
 		this._description = props.description;
 		this._isPercentage = props.isPercentage;
 		this._totalAvailable = props.totalAvailable;
-		this.invalidPercentageMessage = this.invalidPercentageMessage + props.totalAvailable;
+		this.invalidPercentageMessage = this._baseMessage + props.totalAvailable;
 	}
 
 	private clone(props?: Partial<NewBudgetBoxModelProps>): NewBudgetBoxModel {
@@ -56,6 +57,7 @@ export class NewBudgetBoxModel {
 
 	setTotalAvailable(totalAvailableValue: number): NewBudgetBoxModel {
 		const totalAvailable = this.stringToNumber(totalAvailableValue);
+		this.invalidPercentageMessage = this._baseMessage + totalAvailableValue;
 		return this.clone({ totalAvailable });
 	}
 
@@ -98,12 +100,12 @@ export class NewBudgetBoxModel {
 		const totalAvailableLessOrEqualTo100 = this.totalAvailable <= 100;
 		const descriptionLength = this._description.trim().length;
 
-		const isValidPercentage = this._isPercentage &&  greaterThanZero && lessOrEqualTotalAvailable;
+		const isValidPercentage = this.isPercentage &&  greaterThanZero && lessOrEqualTotalAvailable;
 		const isValidDescription = descriptionLength <= 30 && descriptionLength > 0;
 		const isValidTotalAvailable = totalAvailableGreaterOrEqualToZero && totalAvailableLessOrEqualTo100;
-
-		if (!isValidPercentage && this._isPercentage) return { msg: this.invalidPercentageMessage, isOk: false };
+		
 		if (!isValidDescription) return { msg: this.invalidDescriptionMessage, isOk: false };
+		if (!isValidPercentage && this.isPercentage ) return { msg: this.invalidPercentageMessage, isOk: false };
 		if (!isValidTotalAvailable) return { msg: this.invalidTotalAvailableMessage, isOk: false };
 
 		return { isOk: true, msg: this.successMessage, value: this };

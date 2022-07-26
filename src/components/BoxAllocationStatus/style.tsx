@@ -10,12 +10,17 @@ export const Container = styled.div`
 	padding: 0.5% 1%;
 	width: 100%;
 	border-radius: 14px;
+	overflow: hidden;
+	@media (max-width: 700px){
+		display: none;
+	}
 `;
 
 export interface SizeProps {
 	width: number;
-	color: 'white' | 'black';
-	backgroundColor: 'green' | 'gray4' | 'orange' | 'gray3';
+	color: 'white' | 'black' | 'orange';
+	backgroundColor: 'green' | 'gray4' | 'orange' | 'gray3' | 'gray5';
+	isEndStep?: boolean;
 }
 
 export const Step = styled.div<SizeProps>`
@@ -28,7 +33,6 @@ export const Step = styled.div<SizeProps>`
 	align-items: flex-start;
 	justify-content: center;
 	color: ${({ color, theme }: SizeProps & IThemeProvider) => theme.colors[color]};
-	overflow: hidden;
 	background-color: ${({ backgroundColor, theme }: SizeProps & IThemeProvider) => theme.colors[backgroundColor]};
 `;
 
