@@ -93,20 +93,20 @@ export const ContainerData = styled.div`
 	@media (max-width: 750px){
 		width: 98%;
 		margin-left: 0;
+		align-items: center;
 	}
 `;
 
 export const DataWrapper = styled.div`
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	width: 100%;
 	padding: 2%;
 	background-color: ${({ theme }: IThemeProvider) => theme.colors.gray4 };
 	border-radius: 11px;
 	margin-bottom: 2%;
-	overflow-y: scroll;
 	min-height: 40vh;
-	height: 40vh;
+	position: relative;
 `;
 
 export const ContainerBox = styled.div`

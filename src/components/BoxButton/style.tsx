@@ -96,7 +96,7 @@ export const CrossHorizontalIcon = styled.div<ContainerProps>`
 	position: absolute;
 	display: flex;
 	width: 70%;
-	border-bottom: 2.7px dashed ${({ theme, color }: IThemeProvider & ContainerProps ) => `${theme.colors[color]}`};;
+	border-bottom: 2.7px dashed ${({ theme, color }: IThemeProvider & ContainerProps ) => `${theme.colors[color]}`};
 `;
 
 export const CrossVerticalIcon = styled.div<ContainerProps>`
